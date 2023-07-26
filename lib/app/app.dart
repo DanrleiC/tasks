@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-class App extends StatefulWidget {
+import 'presentation/view/home_page.view.dart';
+
+class App extends StatelessWidget {
   const App({super.key});
-
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  
+    
   @override
   Widget build(BuildContext context) {
-    return const Text('Hello world!');
+    return MaterialApp(
+      home: const HomePageView(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
+    );
   }
 }
