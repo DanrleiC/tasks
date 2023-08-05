@@ -10,6 +10,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       home: const HomePageView(),
       debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData.dark(),
       theme: ThemeData(
         useMaterial3: true,
       ),
