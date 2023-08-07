@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:tasks/app/data/model/task.model.dart';
+import 'package:tasks/app/presentation/controller/add_task.controller.dart';
 
 class AddTaskView extends StatefulWidget {
   
@@ -23,6 +24,7 @@ class _AddTaskViewState extends State<AddTaskView> {
   final _descriptionController = TextEditingController();
 
   TaskModel _currentTask = TaskModel();
+  AddTaskController _addTaskController = AddTaskController();
 
   @override
   void initState() {
@@ -99,7 +101,7 @@ class _AddTaskViewState extends State<AddTaskView> {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.teal)
       ),
-      onPressed: () {}, 
+      onPressed: () => _addTaskController.addTask(_titleController.text, _descriptionController.text), 
       icon: const Icon(FontAwesomeIcons.floppyDisk), 
       label: const Text('Save')
     );
