@@ -9,7 +9,6 @@ class AddTaskController {
     data.save(TaskModel(
       title: title,
       description: description,
-      isDone: false
     ));
   }
 }
