@@ -50,21 +50,33 @@ class _HomePageViewState extends State<HomePageView> {
       valueListenable: allList,
       builder: (context, value, child) => ListView.builder(
         itemCount: allList.value.length,
-        itemBuilder: (context, index) => _container(index),
+        itemBuilder: (context, index) => _card(index),
       ),
     );
   }
 
-  Widget _container(int idx) {
+  Widget _card(int idx) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        color: Colors.teal,
-        child: Column(
-          children: [
-            Text(allList.value[idx].title!),
-            Text(allList.value[idx].description!),
-          ],
+      padding: const EdgeInsets.all(7.0),
+      child: Card(
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: _cardContent(
+            title: allList.value[idx].title!,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _cardContent({required String title}){
+    return RichText(
+      text: TextSpan(
+        text: title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 17
         ),
       ),
     );
