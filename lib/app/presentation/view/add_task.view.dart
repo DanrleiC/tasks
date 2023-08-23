@@ -101,7 +101,7 @@ class _AddTaskViewState extends State<AddTaskView> {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.teal)
       ),
-      onPressed: () => _addTaskController.addTask(_titleController.text, _descriptionController.text), 
+      onPressed: () => _addTaskController.addTask(context, _titleController.text, _descriptionController.text), 
       icon: const Icon(FontAwesomeIcons.floppyDisk), 
       label: const Text('Save')
     );
