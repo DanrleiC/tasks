@@ -62,11 +62,25 @@ class _HomePageViewState extends State<HomePageView> {
         elevation: 10,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: _cardContent(
-            title: allList.value[idx].title!,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _cardContent(title: allList.value[idx].title!),
+              _trash(id: allList.value[idx].id!)
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _trash({required int id}){
+    return IconButton(
+      onPressed: () { 
+        _homePageController.deleteTask(id: id);
+        loadData();
+      }, 
+      icon: const Icon(FontAwesomeIcons.trash)
     );
   }
 

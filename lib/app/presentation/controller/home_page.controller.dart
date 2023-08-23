@@ -18,4 +18,7 @@ class HomePageController {
   Future<List<TaskModel>> getAll() async {
     return await data.getAll();
   }
+
+  void deleteTask({required int id}) => data.delete(id);
+  
 }
