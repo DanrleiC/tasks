@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../data/database/table_task.dart';
 import '../../data/model/task.model.dart';
-import '../view/add_task.view.dart';
+import '../view/manage_task.view.dart';
 
 class HomePageController {
 
   TableTask data = TableTask.internal();
   
-  void navegaAdd(BuildContext ctx) {
+  void navegaAdd({required BuildContext ctx, TaskModel? task}) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
-        builder: (context) => const AddTaskView(),
+        builder: (context) => ManageTaskView(task: task),
       ),
     );  
   }

@@ -3,28 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:tasks/app/data/model/task.model.dart';
-import 'package:tasks/app/presentation/controller/add_task.controller.dart';
+import 'package:tasks/app/presentation/controller/manage_task.controller.dart';
 
-class AddTaskView extends StatefulWidget {
+class ManageTaskView extends StatefulWidget {
   
   final TaskModel? task;
 
-  const AddTaskView({
+  const ManageTaskView({
     Key? key,
     this.task,
   }) : super(key: key);
 
   @override
-  State<AddTaskView> createState() => _AddTaskViewState();
+  State<ManageTaskView> createState() => _ManageTaskViewState();
 }
 
-class _AddTaskViewState extends State<AddTaskView> {
+class _ManageTaskViewState extends State<ManageTaskView> {
 
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   TaskModel _currentTask = TaskModel();
-  AddTaskController _addTaskController = AddTaskController();
+  final _manageTaskController = ManageTaskController();
 
   @override
   void initState() {
@@ -101,7 +101,11 @@ class _AddTaskViewState extends State<AddTaskView> {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.teal)
       ),
-      onPressed: () => _addTaskController.addTask(context, _titleController.text, _descriptionController.text), 
+      onPressed: () {
+        _currentTask.title = _titleController.text;
+        _currentTask.description = _descriptionController.text;
+        _manageTaskController.manageTask(context, _titleController.text, _descriptionController.text, _currentTask);
+      }, 
       icon: const Icon(FontAwesomeIcons.floppyDisk), 
       label: const Text('Save')
     );

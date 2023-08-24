@@ -41,7 +41,7 @@ class _HomePageViewState extends State<HomePageView> {
   );
 
   Widget get _floatingActionButtonAdd => FloatingActionButton(
-    onPressed:() => _homePageController.navegaAdd(context),
+    onPressed:() => _homePageController.navegaAdd(ctx:context),
     child: const Icon(FontAwesomeIcons.plus),
   );
 
@@ -66,11 +66,19 @@ class _HomePageViewState extends State<HomePageView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _cardContent(title: allList.value[idx].title!),
+              _edit(editTask: allList.value[idx]),
               _trash(id: allList.value[idx].id!)
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _edit({required TaskModel editTask}){
+    return IconButton(
+      onPressed: () =>  _homePageController.navegaAdd(ctx: context, task: editTask), 
+      icon: const Icon(FontAwesomeIcons.penToSquare)
     );
   }
 

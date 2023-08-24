@@ -16,7 +16,6 @@ class TaskModel {
     int? id,
     String? title,
     String? description,
-    bool? isDone,
   }) {
     return TaskModel(
       id: id ?? this.id,
