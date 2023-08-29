@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks/app/presentation/view/description_task.view.dart';
 import '../../data/database/table_task.dart';
 import '../../data/model/task.model.dart';
 import '../view/manage_task.view.dart';
@@ -11,6 +12,14 @@ class HomePageController {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (context) => ManageTaskView(task: task),
+      ),
+    );  
+  }
+  
+  void navegaDescription({required BuildContext ctx, TaskModel? task}) {
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        builder: (context) => DescriptionTaskView(task: task),
       ),
     );  
   }

@@ -58,17 +58,20 @@ class _HomePageViewState extends State<HomePageView> {
   Widget _card(int idx) {
     return Padding(
       padding: const EdgeInsets.all(7.0),
-      child: Card(
-        elevation: 10,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _cardContent(title: allList.value[idx].title!),
-              _edit(editTask: allList.value[idx]),
-              _trash(id: allList.value[idx].id!)
-            ],
+      child: GestureDetector(
+        onTap: () => _homePageController.navegaDescription(ctx: context, task: allList.value[idx]),
+        child: Card(
+          elevation: 10,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _cardContent(title: allList.value[idx].title!),
+                _edit(editTask: allList.value[idx]),
+                _trash(id: allList.value[idx].id!)
+              ],
+            ),
           ),
         ),
       ),
