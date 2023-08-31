@@ -72,6 +72,6 @@ class TableTask {
 
   Future<int> deleteAll() async {
     Database? database = await db;
-    return await database!.rawDelete("DELETE * from task");
+    return await database!.rawDelete("DELETE FROM task");
   }
 }

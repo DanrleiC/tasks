@@ -38,7 +38,20 @@ class _HomePageViewState extends State<HomePageView> {
     title: const Text('Tasks Top'),
     centerTitle: true,
     elevation: 35,
+    actions: _actions,
   );
+
+  List<Widget> get _actions => [
+    Center(
+      child: GestureDetector(
+        onTap: () {
+          _homePageController.deleteAllTask;
+          loadData();
+        },
+        child: const Text('Delete All 🗑️')
+      ),
+    ),
+  ];
 
   Widget get _floatingActionButtonAdd => FloatingActionButton(
     onPressed:() => _homePageController.navegaAdd(ctx:context),

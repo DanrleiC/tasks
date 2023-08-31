@@ -30,4 +30,5 @@ class HomePageController {
 
   void deleteTask({required int id}) => data.delete(id);
   
+  void get deleteAllTask => data.deleteAll();
 }
