@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import 'package:tasks/app/data/model/task.model.dart';
 import 'package:tasks/app/presentation/controller/manage_task.controller.dart';
@@ -20,6 +21,7 @@ class ManageTaskView extends StatefulWidget {
 
 class _ManageTaskViewState extends State<ManageTaskView> {
 
+  final _dateController = TextEditingController();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
@@ -34,6 +36,7 @@ class _ManageTaskViewState extends State<ManageTaskView> {
       _currentTask = TaskModel.fromMap(widget.task!.toMap());
     }
 
+    _dateController.text = _currentTask.date ?? '';
     _titleController.text = _currentTask.title ?? '';
     _descriptionController.text = _currentTask.description ?? '';
   }
@@ -69,6 +72,8 @@ class _ManageTaskViewState extends State<ManageTaskView> {
          _sizedBox,
          _text(text: 'Description', controller: _descriptionController),
          _sizedBox,
+         _date,
+         _sizedBox,
          _buttonSave
         ],
       ),
@@ -96,6 +101,33 @@ class _ManageTaskViewState extends State<ManageTaskView> {
     );
   }
 
+  Widget get _date {
+    return GestureDetector(
+      onTap: () => _showDataPiker,
+      child: Container(
+        width: 50, // largura do container
+        height: 50, // altura do container
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey.shade300, // cor da borda
+            width: 2.0, // largura da borda
+          ),
+          borderRadius: BorderRadius.circular(12.0), // raio dos cantos
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('data'),
+              Icon(FontAwesomeIcons.calendar)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget get _buttonSave {
     return ElevatedButton.icon(
       style: ButtonStyle(
@@ -109,5 +141,9 @@ class _ManageTaskViewState extends State<ManageTaskView> {
       icon: const Icon(FontAwesomeIcons.floppyDisk), 
       label: const Text('Save')
     );
+  }
+
+  void get _showDataPiker{
+    
   }
 }

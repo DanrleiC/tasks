@@ -31,7 +31,9 @@ class TableTask {
       await db.execute("CREATE TABLE task("
           "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
           "title TEXT,"
-          "description TEXT)"
+          "description TEXT,"
+          "date TEXT,"
+          "priority INT)"
         );
     });
   }
