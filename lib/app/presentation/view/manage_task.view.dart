@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:table_calendar/table_calendar.dart';
-
 import 'package:tasks/app/data/model/task.model.dart';
 import 'package:tasks/app/presentation/controller/manage_task.controller.dart';
 
@@ -25,6 +24,7 @@ class _ManageTaskViewState extends State<ManageTaskView> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
+  DateTime? _selectedDate;
   TaskModel _currentTask = TaskModel();
   final _manageTaskController = ManageTaskController();
 
@@ -100,10 +100,9 @@ class _ManageTaskViewState extends State<ManageTaskView> {
       controller: controller,
     );
   }
-
   Widget get _date {
     return GestureDetector(
-      onTap: () => _showDataPiker,
+      onTap: () => _showDataPiker(context),
       child: Container(
         width: 50, // largura do container
         height: 50, // altura do container
@@ -118,9 +117,13 @@ class _ManageTaskViewState extends State<ManageTaskView> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('data'),
-              Icon(FontAwesomeIcons.calendar)
+            children: [
+              Text(
+                _selectedDate == null 
+                ? 'Select a date'
+                : formattedDate(_selectedDate),
+              ),
+              const Icon(FontAwesomeIcons.calendar)
             ],
           ),
         ),
@@ -136,14 +139,42 @@ class _ManageTaskViewState extends State<ManageTaskView> {
       onPressed: () {
         _currentTask.title = _titleController.text;
         _currentTask.description = _descriptionController.text;
-        _manageTaskController.manageTask(context, _titleController.text, _descriptionController.text, _currentTask);
+        _manageTaskController.manageTask(context, _titleController.text, _descriptionController.text, formattedDate(_selectedDate), _currentTask);
       }, 
       icon: const Icon(FontAwesomeIcons.floppyDisk), 
       label: const Text('Save')
     );
   }
 
-  void get _showDataPiker{
-    
+  Future<void> _showDataPiker(BuildContext context) async {
+    final DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.teal,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.teal,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedDate != null && selectedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = selectedDate;
+      });
+    }
   }
+
+  String formattedDate(date) => DateFormat('dd/MM/yyyy').format(date);
 }

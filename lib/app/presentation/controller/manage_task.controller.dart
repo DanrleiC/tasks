@@ -7,7 +7,7 @@ class ManageTaskController {
 
   TableTask data = TableTask.internal();
   
-  void manageTask(BuildContext context, String title, String description, TaskModel? task) {
+  void manageTask(BuildContext context, String title, String description, String date, TaskModel? task) {
     try {
       task?.id != null
       ? data.update(task!) 
@@ -15,6 +15,7 @@ class ManageTaskController {
         TaskModel(
           title: title,
           description: description,
+          date: date
         )
       );
     } catch (e) {

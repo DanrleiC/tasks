@@ -36,6 +36,7 @@ class _DescriptionTaskViewState extends State<DescriptionTaskView> {
       children: [
         Text('Title: ${widget.task?.title}'),
         Text('Description: ${widget.task?.description}'),
+        Text('Date: ${widget.task?.date}'),
       ],
     );
   }
