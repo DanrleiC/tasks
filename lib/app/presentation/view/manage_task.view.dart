@@ -63,19 +63,36 @@ class _ManageTaskViewState extends State<ManageTaskView> {
   );
 
   Widget get _content {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _imageGoku,
+           _text(text: 'Title', controller: _titleController),
+           _sizedBox,
+           _text(text: 'Description', controller: _descriptionController),
+           _sizedBox,
+           _date,
+           _sizedBox,
+           _buttonSave
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget get _imageGoku {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-         _text(text: 'Title', controller: _titleController),
-         _sizedBox,
-         _text(text: 'Description', controller: _descriptionController),
-         _sizedBox,
-         _date,
-         _sizedBox,
-         _buttonSave
-        ],
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0), // raio dos cantos
+        ),
+        child: Image.asset(
+          'lib/app/assets/goku.gif',
+        ),
       ),
     );
   }
@@ -84,41 +101,46 @@ class _ManageTaskViewState extends State<ManageTaskView> {
 
   Widget _text({String? text, TextEditingController? controller}){
     return  TextField(
-      cursorColor: Colors.teal,
+      cursorColor: Colors.grey.shade300,
       decoration: InputDecoration(
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(7)),
+        ),
         focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(7)),
           borderSide: BorderSide(
             color: Colors.teal
           )
         ),
         labelText: text,
         labelStyle: const TextStyle(
-          color: Colors.teal,
+          color: Color.fromRGBO(224, 224, 224, 1)
         ),
         filled: true,
       ),
       controller: controller,
     );
   }
+
   Widget get _date {
     return GestureDetector(
       onTap: () => _showDataPiker(context),
       child: Container(
         width: 50, // largura do container
-        height: 50, // altura do container
+        height: 60, // altura do container
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.grey.shade300, // cor da borda
-            width: 2.0, // largura da borda
           ),
-          borderRadius: BorderRadius.circular(12.0), // raio dos cantos
+          borderRadius: BorderRadius.circular(7.0), // raio dos cantos
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              Text(_dateController.text.isNotEmpty 
+                ? _dateController.text :
                 _selectedDate == null 
                 ? 'Select a date'
                 : formattedDate(_selectedDate),
@@ -176,5 +198,5 @@ class _ManageTaskViewState extends State<ManageTaskView> {
     }
   }
 
-  String formattedDate(date) => DateFormat('dd/MM/yyyy').format(date);
+  String formattedDate(date) => date !=null ? DateFormat('dd/MM/yyyy').format(date) : '';
 }

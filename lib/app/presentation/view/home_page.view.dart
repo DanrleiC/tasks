@@ -14,6 +14,7 @@ class _HomePageViewState extends State<HomePageView> {
   
   final _homePageController = HomePageController();
   ValueNotifier<List<TaskModel>> allList = ValueNotifier([]);
+  bool isSelected = false;
 
   @override
   void initState() {
@@ -38,19 +39,20 @@ class _HomePageViewState extends State<HomePageView> {
     title: const Text('Tasks Top'),
     centerTitle: true,
     elevation: 35,
-    actions: _actions,
+    actions: isSelected? _actions : [],
   );
 
   List<Widget> get _actions => [
-    Center(
-      child: GestureDetector(
-        onTap: () {
-          _homePageController.deleteAllTask;
-          loadData();
-        },
-        child: const Text('Delete All 🗑️')
-      ),
-    ),
+    IconButton(
+      onPressed: (){
+        _homePageController.deleteAllTask;
+        loadData();
+        setState(() {
+          isSelected = false;
+        });
+      }, 
+      icon: const Icon(FontAwesomeIcons.trash)
+    )
   ];
 
   Widget get _floatingActionButtonAdd => FloatingActionButton(
@@ -72,6 +74,9 @@ class _HomePageViewState extends State<HomePageView> {
     return Padding(
       padding: const EdgeInsets.all(7.0),
       child: GestureDetector(
+        onLongPress: () => setState(() {
+          isSelected = true;
+        }),
         onTap: () => _homePageController.navegaDescription(ctx: context, task: allList.value[idx]),
         child: Card(
           elevation: 10,
@@ -81,13 +86,21 @@ class _HomePageViewState extends State<HomePageView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _cardContent(title: allList.value[idx].title!),
-                _edit(editTask: allList.value[idx]),
-                _trash(id: allList.value[idx].id!)
+                _containerJoin(idx: idx)
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _containerJoin({required int  idx}) {
+    return Row(
+      children: [
+        _edit(editTask: allList.value[idx]),
+        _trash(id: allList.value[idx].id!)
+      ],
     );
   }
 
