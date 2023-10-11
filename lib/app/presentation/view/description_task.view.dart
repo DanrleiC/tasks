@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:tasks/app/presentation/controller/description.controller.dart';
 
 import '../../data/model/task.model.dart';
 
@@ -16,6 +18,16 @@ class DescriptionTaskView extends StatefulWidget {
 }
 
 class _DescriptionTaskViewState extends State<DescriptionTaskView> {
+
+  final _descriptionController = DescriptionController();
+  late final DateTime date;
+
+  @override
+  void initState() {
+    date = _descriptionController.tempDate(widget.task!.date!);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +46,68 @@ class _DescriptionTaskViewState extends State<DescriptionTaskView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Title: ${widget.task?.title}'),
-        Text('Description: ${widget.task?.description}'),
-        Text('Date: ${widget.task?.date}'),
+        _title,
+        _description,
+        _date,
+        _calendar
       ],
+    );
+  }
+
+  Widget get _title{
+    return RichText(
+      text: TextSpan(
+        text: 'Title:\n',
+        style: const TextStyle(
+          fontSize: 16
+        ),
+        children: <TextSpan>[
+          TextSpan(
+            text: '${widget.task?.title}', 
+            style: const TextStyle(
+              fontSize: 50
+            )
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget get _description{
+    return RichText(
+      text: TextSpan(
+        text: 'Description:\n',
+        style: const TextStyle(
+          fontSize: 16
+        ),
+        children: <TextSpan>[
+          TextSpan(
+            text: '${widget.task?.description}', 
+            style: const TextStyle(
+              fontSize: 50
+            )
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget get _date{
+    return RichText(
+      text: const TextSpan(
+        text: 'Date:\n',
+        style: TextStyle(
+          fontSize: 16
+        ),
+      ),
+    );
+  }
+
+  Widget get _calendar {
+    return TableCalendar(
+      firstDay: DateTime.utc(2010, 10, 16),
+      lastDay: DateTime.utc(2030, 3, 14),
+      focusedDay: date
     );
   }
 }
